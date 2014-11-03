@@ -399,6 +399,8 @@ The PyNE \texttt{Sampler} class:
 \begin{frame}
 \frametitle{Complex source definitions}
 
+Define a source instead of an \texttt{sdef}, the sky is the limit!
+
 \begin{columns}[T]
     \begin{column}{.4\textwidth}
      \begin{block}{CAD geometry}
@@ -418,7 +420,7 @@ The PyNE \texttt{Sampler} class:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Complex source definitions}
-Photon flux distribution from DAG-MCNP5:
+Photon flux distribution from MCNP5:
 \begin{columns}[c]
 
 \centering
@@ -438,7 +440,7 @@ Photon flux distribution from DAG-MCNP5:
 \begin{frame}{CADIS}
 Consistant Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
     \begin{itemize}
-        \item{Monte Carlo Variance Reduction using a deterministic estimate of the adjoint flux.}
+        \item{A Monte Carlo variance reduction technique that uses a deterministic estimate of the adjoint flux.}
         \begin{itemize}
             \item{Source biasing}
             \item{Weight windows}
@@ -470,8 +472,36 @@ biased source density  \hspace{2cm} weight window lower bounds \\
 \begin{frame}{Rigorous Two-Step Activation}
     \begin{itemize}
         \item Neutrons activate system components, gamma source persists after shutdown.
-        \item Important for rad safety at ITER, JET, NIF, etc.
+        \item Important for occupational safety at ITER, JET, NIF, etc.
+        \item DAG-MCNP5 \cite{wilson_acceleration_2009} for neutron and photon transport.
+        \item ALARA \cite{wilson_alara_1999} for transmutation and decay.
     \end{itemize}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centerline{\includegraphics[height=0.5\textheight]{r2s.pdf}}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Uses the PyNE modules:
+            \begin{itemize}
+                \item{\texttt{mcnp}}
+                \item{\texttt{mesh}}
+                \item{\texttt{material} }
+                \item{\texttt{alara}}
+                \item{\texttt{dagmc}}
+                \item{\texttt{source sampling}}
+                \item{\texttt{variance reduction}}
+                \item{\texttt{r2s module}}
+           \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example: FNG ITER Shutdown Dose Rate Benchmark}
+\centerline{\includegraphics[height=0.85\textheight]{r2s_workflow.png}}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Comparison to Experimental Results}
     \begin{center}
         \includegraphics[height=2.5in,clip]{comp.pdf}
     \end{center}
