@@ -84,7 +84,22 @@
 \author{C.\ R.\ Bates}
 \date{11 November 2014}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% arrow
+\usetikzlibrary{shapes.arrows}
+\tikzset{
+        myarrow/.style={
+        draw,
+        fill=orange,
+        single arrow,
+        minimum height=3.5ex,
+        single arrow head extend=0.5ex}
+}
+
+\newcommand{\arrowdown}{
+ \tikz [baseline=-1ex]{\node [myarrow,rotate=-90] {};}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
 
@@ -301,11 +316,192 @@
     % Explain that it's tetrahedral or cartesian --> Sn transport friendly!
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Mesh-based source sampling}
+
+Randomly sample Monte Carlo birth parameters (position, energy, statistical weight) from a mesh-based source.\\
+\vspace{0.3cm}
+The PyNE \texttt{Sampler} class:
+\begin{itemize}
+\item{Cartesian and tetrahedral mesh}
+\item{Utilizes alias sampling method \cite{smith_analysis_2005}}
+\item{Sampling modes:}
+  \begin{itemize}
+  \item{analog -- no source biasing}
+  \item{uniform -- all phases space sampled equally, statistical weight adjusted accordingly}
+  \item{user-specified -- any bias scheme specified by the user}
+    \begin{itemize}
+    \item{Consistent Adjoint-Driven Importance Sampling (CADIS) in PyNE \texttt{variance\_reduction} module}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Source sampling modes}
+
+\begin{columns}[T]
+\begin{column}{0.3\textwidth}
+\begin{block}{\tiny Source density distribution}
+\vspace{0.2cm}
+\includegraphics[height=2.5cm]{sampler_src.png}
+\end{block}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{block}{\tiny Analog sampling}
+\includegraphics[height=2.7cm]{sample_cart.png}
+\end{block}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{block}{\tiny Uniform sampling}
+\includegraphics[height=2.7cm]{sample_uniform.png}
+\end{block}
+\end{column}
+\end{columns}
+
+\begin{columns}[T]
+\begin{column}{0.3\textwidth}
+\vspace{0.6cm}
+{\small In addition to a source density distribution, a biased source density distribution can also be specified.}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{block}{\tiny Biased source density distribution}
+\vspace{0.2cm}
+\includegraphics[height=2.5cm]{sampler_bias.png}
+\end{block}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{block}{\tiny used-specified sampling}
+\includegraphics[height=2.7cm]{sample_user.png}
+\end{block}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Using the \texttt{Sampler} class}
+
+\begin{itemize}
+\item{Written in C++}
+\item{Indented to be integrated into physics codes}
+  \begin{itemize}
+  \item{C/C++, Fortran, Python interfaces}
+  \end{itemize}
+\item{Use with MCNP5 via source.F90 file}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Complex source definitions}
+
+Define a source instead of an \texttt{sdef}, the sky is the limit!
+
+\begin{columns}[T]
+    \begin{column}{.4\textwidth}
+     \begin{block}{CAD geometry}
+    \centering{\includegraphics[width=4.5cm]{turbine_cad.png}}
+     \vspace{0.1cm}
+     \end{block}
+    \end{column}
+    \begin{column}{.45\textwidth}
+    \begin{block}{source density (p/cm$^3$/s)}
+    \centering{\includegraphics[width=5.5cm]{turbine_src.png}}
+    \end{block}
+    \end{column}
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Complex source definitions}
+Photon flux distribution from MCNP5:
+\begin{columns}[c]
+
+\centering
+\begin{column}{0.1\textwidth}
+\rotatebox{90}{(\large p/cm$^2$/history)}
+\end{column}
+
+\begin{column}{0.8\textwidth}
+\hspace{-0.85cm}
+\centerline{\includegraphics[height=7cm]{turbine_flux.png}}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{CADIS}
+Consistant Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
+    \begin{itemize}
+        \item{A Monte Carlo variance reduction technique that uses a deterministic estimate of the adjoint flux.}
+        \begin{itemize}
+            \item{Source biasing}
+            \item{Weight windows}
+        \end{itemize}
+        \item{PyNE has a mesh-based implimentation:}
+        \begin{itemize}
+            \item{Uses the PyNE source sampling capabilities with MCNP for mesh-based source biasing.}
+            \item{Adjoint fluxes from must be supplied, e.g. from the Denovo 3D S$_N$ code \cite{Evans2010}.}
+        \end{itemize}    
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{CADIS example}
+
+\centering 
+\hspace{0.7cm} source density \hspace{3.7cm} adjoint flux \\
+\includegraphics[width=4cm]{src.png} \hspace{1cm} \includegraphics[width=4cm]{adj.png} \\
+\vspace{0.3cm}
+\hspace{0.5cm} \arrowdown CADIS \\
+\vspace{0.3cm}
+biased source density  \hspace{2cm} weight window lower bounds \\
+\includegraphics[width=4cm]{bsrc.png} \hspace{1cm}
+\includegraphics[width=4cm]{ww.png}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Rigorous Two-Step Activation}
     \begin{itemize}
         \item Neutrons activate system components, gamma source persists after shutdown.
-        \item Important for rad safety at ITER, JET, NIF, etc.
+        \item Important for occupational safety at ITER, JET, NIF, etc.
+        \item DAG-MCNP5 \cite{wilson_acceleration_2009} for neutron and photon transport.
+        \item ALARA \cite{wilson_alara_1999} for transmutation and decay.
     \end{itemize}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centerline{\includegraphics[height=0.5\textheight]{r2s.pdf}}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Uses the PyNE modules:
+            \begin{itemize}
+                \item{\texttt{mcnp}}
+                \item{\texttt{mesh}}
+                \item{\texttt{material} }
+                \item{\texttt{alara}}
+                \item{\texttt{dagmc}}
+                \item{\texttt{source sampling}}
+                \item{\texttt{variance reduction}}
+                \item{\texttt{r2s module}}
+           \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Example: FNG ITER Shutdown Dose Rate Benchmark}
+\centerline{\includegraphics[height=0.85\textheight]{r2s_workflow.png}}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Comparison to Experimental Results}
     \begin{center}
         \includegraphics[height=2.5in,clip]{comp.pdf}
     \end{center}

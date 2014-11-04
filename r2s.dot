@@ -1,0 +1,13 @@
+digraph G {
+    node [fontsize=30, fontname="Helvetica", margin=0.05];
+
+    "neutron transport" -> "activation"
+    "activation" -> "photon transport"
+    "photon transport" -> "shutdown dose rate"
+
+    "shutdown dose rate" [shape=box]
+
+    "neutron transport" [style=filled, fillcolor="#CD9900", fontcolor=black]
+    "photon transport" [style=filled, fillcolor="#CD9900", fontcolor=black]
+    "activation" [style=filled, fillcolor="#CD9900", fontcolor=black]
+}
