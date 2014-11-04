@@ -301,6 +301,7 @@
 \begin{frame}{Discretizing Geometry}
     \begin{itemize}
         \item Discretize geometry on tetrahedral or cartesian mesh for transport
+        \item Relies on CUBIT for mesh generation
         \item Redistributes volume averaged properties
     \end{itemize}
     \begin{columns}
@@ -384,14 +385,15 @@ The PyNE \texttt{Sampler} class:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Using the \texttt{Sampler} class}
-
+\Large
 \begin{itemize}
 \item{Written in C++}
-\item{Indented to be integrated into physics codes}
+\item{Intended to be integrated into physics codes}
   \begin{itemize}
-  \item{C/C++, Fortran, Python interfaces}
+    \large
+    \item{C/C++, Fortran, Python interfaces}
   \end{itemize}
-\item{Use with MCNP5 via source.F90 file}
+\item{Use with MCNP5 via supplied source.F90 file}
 \end{itemize}
 \end{frame}
 
@@ -551,27 +553,29 @@ biased source density  \hspace{2cm} weight window lower bounds \\
 
 \section{Community Development}
 
-\begin{frame}{Tutorials}
+\begin{frame}{Tutorials + Hackathons}
   \Large
     \begin{itemize}
-        \item UC Berkeley Nov. 2013
+        \item Tutorial - UC Berkeley Nov. 2013
         \begin{itemize}
+            \large
             \item Engage Profs. and Grad + Educate Undergrads
         \end{itemize}
-        \item ANS RPSD 2014
+        \item 0.4 Sprint - UC Berkeley Feb. 2014
         \begin{itemize}
+            \large
+            \item Homogenizing code style
+        \end{itemize}
+        \item Tutorial - ANS RPSD 2014
+        \begin{itemize}
+            \large
             \item Engage national labs + industry
         \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Hackathons}
-  \Large
-    \begin{itemize}
-        \item Development sprints
-        \item Congregate in one geographic location
-        \item Feb. 2014 - 0.4 sprint
-        \item Nov. 2014 - 0.5 sprint
+        \item Hackathon - UC Berkeley Nov. 14-16
+        \begin{itemize}
+            \large
+            \item Verification and Validation
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
