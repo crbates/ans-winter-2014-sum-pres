@@ -300,7 +300,7 @@
 
 \begin{frame}{Discretizing Geometry}
     \begin{itemize}
-        \item Discretize geometry on tetrahedral or cartesian mesh for transport
+        \item Discretize geometry on tetrahedral or Cartesian mesh for transport
         \item Relies on CUBIT for mesh generation
         \item Redistributes volume averaged properties
     \end{itemize}
@@ -440,14 +440,14 @@ Resultant photon flux distribution from MCNP5:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{CADIS}
-Consistant Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
+Consistent Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
     \begin{itemize}
         \item{A Monte Carlo variance reduction technique that uses a deterministic estimate of the adjoint flux.}
         \begin{itemize}
             \item{Source biasing}
             \item{Weight windows}
         \end{itemize}
-        \item{PyNE has a mesh-based implimentation:}
+        \item{PyNE has a mesh-based implementation:}
         \begin{itemize}
             \item{Uses the PyNE source sampling capabilities with MCNP for mesh-based source biasing.}
             \item{Adjoint fluxes from must be supplied, e.g. from the Denovo 3D S$_N$ code \cite{Evans2010}.}
