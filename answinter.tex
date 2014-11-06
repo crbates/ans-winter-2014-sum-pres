@@ -300,7 +300,7 @@
 
 \begin{frame}{Discretizing Geometry}
     \begin{itemize}
-        \item Discretize geometry on tetrahedral or cartesian mesh for transport
+        \item Discretize geometry on tetrahedral or Cartesian mesh for transport
         \item Relies on CUBIT for mesh generation
         \item Redistributes volume averaged properties
     \end{itemize}
@@ -330,10 +330,10 @@ The PyNE \texttt{Sampler} class:
 \item{Sampling modes:}
   \begin{itemize}
   \item{analog -- no source biasing}
-  \item{uniform -- all phases space sampled equally, statistical weight adjusted accordingly}
+  \item{uniform -- all space sampled equally, statistical weight adjusted accordingly}
   \item{user-specified -- any bias scheme specified by the user}
     \begin{itemize}
-    \item{Consistent Adjoint-Driven Importance Sampling (CADIS) in PyNE \texttt{variance\_reduction} module}
+    \item{Consistent Adjoint-Driven Importance Sampling (CADIS) \cite{haghighat_monte_2003} in PyNE \texttt{variance\_reduction} module}
     \end{itemize}
   \end{itemize}
 \end{itemize}
@@ -393,7 +393,7 @@ The PyNE \texttt{Sampler} class:
     \large
     \item{C/C++, Fortran, Python interfaces}
   \end{itemize}
-\item{Use with MCNP5 via supplied source.F90 file}
+\item{Use with MCNP5 via a PyNE source.F90 file}
 \end{itemize}
 \end{frame}
 
@@ -401,7 +401,7 @@ The PyNE \texttt{Sampler} class:
 \begin{frame}
 \frametitle{Complex source definitions}
 
-Define a source instead of an \texttt{sdef}, the sky is the limit!
+Define a source on a mesh instead of an \texttt{sdef}, the sky is the limit!
 
 \begin{columns}[T]
     \begin{column}{.4\textwidth}
@@ -422,7 +422,7 @@ Define a source instead of an \texttt{sdef}, the sky is the limit!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Complex source definitions}
-Photon flux distribution from MCNP5:
+Resultant photon flux distribution from MCNP5:
 \begin{columns}[c]
 
 \centering
@@ -440,14 +440,14 @@ Photon flux distribution from MCNP5:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{CADIS}
-Consistant Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
+Consistent Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
     \begin{itemize}
         \item{A Monte Carlo variance reduction technique that uses a deterministic estimate of the adjoint flux.}
         \begin{itemize}
             \item{Source biasing}
             \item{Weight windows}
         \end{itemize}
-        \item{PyNE has a mesh-based implimentation:}
+        \item{PyNE has a mesh-based implementation:}
         \begin{itemize}
             \item{Uses the PyNE source sampling capabilities with MCNP for mesh-based source biasing.}
             \item{Adjoint fluxes from must be supplied, e.g. from the Denovo 3D S$_N$ code \cite{Evans2010}.}
@@ -457,15 +457,18 @@ Consistant Adjoint-Driven Importance Sampling \cite{haghighat_monte_2003}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{CADIS example}
+\frametitle{Mesh-Based CADIS example}
 
+Adjoint fluxes from ADVANTG \cite{advantg} \\
+
+\vspace{0.2cm}
 \centering 
-\hspace{0.7cm} source density \hspace{3.7cm} adjoint flux \\
+\hspace{0.7cm} source density \hspace{3cm} adjoint flux \\
 \includegraphics[width=4cm]{src.png} \hspace{1cm} \includegraphics[width=4cm]{adj.png} \\
-\vspace{0.3cm}
+\vspace{0.2cm}
 \hspace{0.5cm} \arrowdown CADIS \\
-\vspace{0.3cm}
-biased source density  \hspace{2cm} weight window lower bounds \\
+\vspace{0.2cm}
+\hspace{0.5cm} biased source density  \hspace{0.5cm} weight window lower bounds \\
 \includegraphics[width=4cm]{bsrc.png} \hspace{1cm}
 \includegraphics[width=4cm]{ww.png}
 
